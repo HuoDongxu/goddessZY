@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>1-3多级导航菜单</title> <!--鼠标滑过主菜单,显示子菜单-->
+    <style>               /* HTML结构:ul>li*3 */
+        *{                /* HTML结构:li>a+ul>3*li */
+            margin: 0;
+            padding: 0;
+        }
+        ul,ol{
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+        }
+        #menu{
+            /*此处不能再作用overflow,会把二级菜单隐藏*/
+            height: 30px;
+        }
+        #menu .main-menu{
+            float: left;
+            width: 120px;
+            height: 30px;
+            background: deeppink;
+            margin-right:5px;
+        }
+        #menu .main-menu a{
+            width: 100%;
+            height: 100%;
+            display: block;
+            text-align: center;
+            line-height: 30px;
+        }
+        #menu .sub-menu a{
+            text-align: left; /*文本对齐方式:左对齐*/
+            text-indent: 10px;     /*文本缩进*/
+        }
+        #menu .main-menu .sub-menu{
+            background: pink;
+            display: none;
+        }
+        #menu .sub-menu li{
+            border-bottom:1px dashed blue;
+        }
+    </style>
+</head>
+<body>
+<ul id="menu">
+    <li class="main-menu">
+        <a href="#">link 1</a>
+        <ul class="sub-menu">
+            <li><a href="#">sublink 1</a></li>
+            <li><a href="#">sublink 2</a></li>
+            <li><a href="#">sublink 3</a></li>
+        </ul>
+    </li>
+    <li class="main-menu">
+        <a href="#">link 2</a>
+        <ul class="sub-menu">
+            <li><a href="#">sublink 1</a></li>
+            <li><a href="#">sublink 2</a></li>
+            <li><a href="#">sublink 3</a></li>
+        </ul>
+    </li>
+    <li class="main-menu">
+        <a href="#">link 3</a>
+        <ul class="sub-menu">
+            <li><a href="#">sublink 1</a></li>
+            <li><a href="#">sublink 2</a></li>
+            <li><a href="#">sublink 3</a></li>
+        </ul>
+    </li>
+</ul>
+<script>
+    var oMenu=document.getElementById('menu');
+    var aMainMene=oMenu.getElementsByTagName('li');
+    //oMenu.getElementsByClassName('main-menu')//IE8及以下不支持
+    for(var i=0;i<aMainMene.length;i++){         //遍历所有li菜单,共找到12个
+        if(aMainMene[i].className=='main-menu'){ //找到一级菜单,3个
+            aMainMene[i].onmouseover=function(){
+                var oSubMenu=this.getElementsByTagName('ul')[0];//利用当前一级菜单找到里面
+                oSubMenu.style.display='block';       //标签名为ul的标签(是个数组)并设置样式
+            };
+            aMainMene[i].onmouseout=function(){
+                var oSubMenu=this.getElementsByTagName('ul')[0];
+                oSubMenu.style.display='none';
+            };
+        }
+    }
+</script>
+</body>
+</html>
