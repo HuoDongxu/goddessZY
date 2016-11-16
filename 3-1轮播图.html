@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">    <!--HTML结构:div>ul+div+div-->
+    <title>3-1轮播图</title>   <!--ul>li*4:div>img*4:div>span*2-->
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        #container{
+            margin:100px auto;
+            width: 430px;
+            height: 430px;
+            position: relative;
+        }
+        #tab{
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+        }
+        #tab li{
+            width: 20px;
+            height: 20px;
+            background: #000;
+            color: #ffffff;
+            float: left;
+            margin-right: 5px;
+            line-height: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+        #tab li.selected{
+            background: orange;
+        }
+        #content img.selected{
+            display: block;
+        }
+        #content img{
+            display:none;
+        }
+        #arrow{
+            position:absolute;
+            left: 10px;
+            bottom: 10px;
+        }
+        #arrow span{
+            width: 20px;
+            height: 20px;
+            background: #000;
+            color: #ffffff;
+            margin-left: 5px;
+            float: left;
+            text-align: center;
+            line-height: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <ul id="tab">
+            <li class="selected">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+        <div id="content">
+            <img src="img/l1.jpg" alt="" class="selected"/>
+            <img src="img/l2.jpg" alt=""/>
+            <img src="img/l3.jpg" alt=""/>
+            <img src="img/l4.jpg" alt=""/>
+        </div>
+        <div id="arrow">
+            <span id="prev">&lt;</span>
+            <span id="next">&gt;</span>
+        </div>
+    </div>
+    <script>
+        var oTab=document.getElementById('tab');
+        var aLi=oTab.getElementsByTagName('li');
+        var oContent=document.getElementById('content');
+        var aImg=oContent.getElementsByTagName('img');
+        var oNext=document.getElementById('next');
+        var oPrev=document.getElementById('prev');
+        var iNow=0;  //当前显示的图片的索引
+        for(var i=0;i<aLi.length;i++){
+            aLi[i].index=i;                 //自定义属性,记录每个li的索引
+            aLi[i].onmouseover=function(){  //给li增加事件
+                changImg(this.index);       //调用函数
+            };
+        }
+        /* 封装函数 功能:清空li和img的className属性,
+           并给当前产生事件的组件增加className属性
+           参数 idx:产生事件的索引下标
+         */
+        function changImg(idx){             //更换图片
+            for(var i=0;i<aLi.length;i++){
+                aLi[i].className='';
+                aImg[i].className='';
+            }
+            aLi[idx].className='selected';
+            aImg[idx].className='selected';
+        }
+        oNext.onclick=function(){           //点击next事件
+            iNow++;
+            if(iNow==aImg.length){
+                iNow=0;
+            }
+            changImg(iNow);
+        };
+        oPrev.onclick= function () {        //点击prev事件
+            iNow--;
+            if(iNow==-1){
+                iNow=aLi.length-1;
+            }
+            changImg(iNow)
+        };
+    </script>
+</body>
+</html>
