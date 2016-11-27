@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>4-1拖拽</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #drag{
+            width: 200px;
+            height: 200px;
+            background: #f00;
+            cursor: pointer;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id="drag"></div>
+    <script>
+        var oDrag=document.getElementById('drag');
+        oDrag.onmousedown=function(e){
+            e=e||window.event;           //FF||IE 兼容性
+            var iDisX= e.clientX-oDrag.offsetLeft,
+                iDisY= e.clientY-oDrag.offsetTop;
+            document.onmousemove=function(e){
+                e=e||window.event;
+                oDrag.style.left= e.clientX-iDisX+"px";
+                oDrag.style.top= e.clientY-iDisY+"px";
+            };
+            oDrag.onmouseup= function (){ //松开鼠标,清空移动事件
+                document.onmousemove=null;
+            }
+        };
+    </script>
+</body>
+</html>
