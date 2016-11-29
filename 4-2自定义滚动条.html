@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>4-2自定义滚动条</title>  <!--HTML结构:div#container> -->
+    <style>                      /* div#content+div#scroll-bar>div#scroll-btn */
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #container{
+            width: 400px;
+            height: 500px;
+            background: #cccccc;
+            overflow: hidden;
+            position: relative;
+        }
+        #content{
+            width: 380px;
+            position: absolute;
+            top:0;
+            left:0;
+        }
+        #scroll-bar{
+            width: 20px;
+            height: 500px;
+            background: #dddddd;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+        #scroll-btn{
+            width: 20px;
+            height: 20px;
+            background: #ff0000;
+            cursor: pointer;
+            position: absolute;
+            top:0;
+            left:0;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="content">
+            11找你妹woca 找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca
+            找你妹woca 找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca
+            找你妹woca 找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找你妹woc 找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找找你妹woca找你妹woca找你妹woca找你妹woca找你妹woca找找你妹woca找你妹woca找你妹22
+            找你妹woca 找你妹woca找你妹woca找你妹woca找你妹woca 找你妹woca找你妹woca找你妹woca找你妹woca 找你妹woca找你妹woca找你妹woca找你妹woca 找你妹woca找你妹woca找你妹woca找你妹woca 找你妹woca找你妹woca找你妹woca找你妹woca 找你妹woca找你妹woca找你妹woca找你妹woca 找你妹woca找你妹woca找你妹woca找你妹woca 找你妹woca找你妹woca找你妹woca找你妹woca 找你妹woca找你妹woca找你妹woca找你妹woca 找你妹woca找你妹woca找你妹woca找你妹woca 找你妹woca找你妹woca找你妹woca找你妹woca 找你妹woca找你妹woca找你妹woca找你妹woca 找你妹woca找你妹woca找你妹woca找你妹w66
+        </div>
+        <div id="scroll-bar">
+            <div id="scroll-btn">
+            </div>
+        </div>
+    </div>
+    <script>
+        var oScrollBtn=document.getElementById('scroll-btn');
+        var oScrollBar=document.getElementById('scroll-bar');
+        var oContent=document.getElementById('content');
+        oScrollBtn.onmousedown=function(e){
+            e=e||window.event;
+            var iDisY= e.clientY-oScrollBtn.offsetTop;
+            document.onmousemove=function(e) {
+                e = e || window.event;
+                var top = e.clientY - iDisY;
+                if(top<0){             //如果小按钮超出上边界和下边界 重新定位
+                    top=0;
+                }
+                if(top>(oScrollBar.offsetHeight-oScrollBtn.offsetHeight)){
+                    top=oScrollBar.offsetHeight-oScrollBtn.offsetHeight;
+                }
+                oScrollBtn.style.top = top + 'px';
+                var fScale = top / (oScrollBar.offsetHeight - oScrollBtn.offsetHeight); //比例系数
+                oContent.style.top = -(oContent.offsetHeight - oScrollBar.offsetHeight) * fScale + "px";
+                return false;
+            };
+            document.onmouseup=function(){
+                document.onmousemove=null;
+            };
+        };
+    </script>
+</body>
+</html>
